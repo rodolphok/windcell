@@ -46,7 +46,6 @@ $app->before(function (Request $request) use ($app) {
     if (!is_array($target)) {
         $target = explode(':', $target, 2);
     }
-
     list($controller, $action) = $target;
     $valid = forward_static_call_array(array($controller, 'isPublic'), array($action));
 
@@ -55,47 +54,25 @@ $app->before(function (Request $request) use ($app) {
         return;
     }
 
-   // Check if the user is logged in
-   if (null === $app['session']->get('login')) {
-       return $app->redirect('/');
-   }
+    // Check if the user is logged in
+    if (null === $app['session']->get('login')) {
+        return $app->redirect('/');
+    }
 
     // If the user is an admin, he can access anything
     if ($app['session']->get('role') == 'admin') {
-        return ;
+        return;
     }
 
+    // Check if the action is accessible by guest users
+    $validVendedor = forward_static_call_array(array($controller, 'isVendedor'), array($action));
 
-
-         // Check if the action is accessible by guest users
-         $validVendedor = forward_static_call_array(array($controller, 'isVendedor'), array($action));
-
-         //Common users only access the /project controller
-         if (!$validVendedor) {
-             return $app->redirect('/vendedor');
-         }
+    //Common users only access the /project controller
+    if (!$validVendedor) {
+        return $app->redirect('/vendedor');
+    }
 
 });
-
-$app->register(new Silex\Provider\SecurityServiceProvider(), array(
-    'security.firewalls' => array(
-        'admin' => array(
-            'pattern' => '^/',
-            'form' => array(
-                'login_path' => '/login',
-                'check_path' => '/admin/login_check',
-                'username_parameter' => 'form[username]',
-                'password_parameter' => 'form[password]',
-            ),
-            'logout'  => true,
-            'anonymous' => true,
-
-        ),
-    ),
-    'security.role_hierarchy' => array(
-        'ROLE_ADMIN' => array('ROLE_USER'),
-    ),
-));
 
 $app->mount('/', new Windcell\Controller\IndexController);
 $app->mount('/admin/ddd', new Windcell\Controller\DDDController);

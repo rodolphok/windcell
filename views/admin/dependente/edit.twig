@@ -1,0 +1,37 @@
+{% extends "layout_not_logged.twig" %}
+{% block content %}
+    <div class="container margin20">
+        <div class="col-md-4 col-md-offset-4 ">
+        <div class="col-md-9">
+              {% if dependente is not null %}
+                <h3>Editar ddd</h3>
+             {% else %}
+                <h3>Novo ddd</h3>
+             {% endif %}   
+        </div>
+
+            <form  method="POST" action="/dependente/create">
+                <input type="hidden" name="id" value="{{ dependente ? dependente.id : "" }}" />
+                <div class="row">
+                    <div class="col-md-6">
+                        <div>
+                            <label for="name">Nome *</label>
+                            <input type="text" name="valor" id="valor" value="{{ dependente and dependente.valor ? dependente.valor : "" }}" required class="form-control" />
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="row submit">
+                    <div class="col-md-6">
+                        <a href="/dependente" class="btn btn-default" title="Cancelar cadastro">Cancelar</a>
+                    </div>
+                    <div class="col-md-6">
+                        <button class="btn btn-success" type="submit" title="Salvar cliente">Salvar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+{% endblock %}

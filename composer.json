@@ -1,0 +1,30 @@
+{
+    "name": "coderockr/silex-skel",
+    "description": "Silex Skel",
+    "require": {
+      "silex/silex": "1.0.*",
+        "symfony/http-kernel": "*",
+        "symfony/browser-kit": "*",
+        "symfony/console": "*",
+        "symfony/security": "*",
+        "doctrine/dbal": "*",
+        "doctrine/orm": "*",
+        "twig/twig": ">=1.8,<2.0-dev",
+        "intervention/image": "*",
+        "symfony/twig-bridge": "2.1.*",
+        "dflydev/doctrine-orm-service-provider": "1.0.*@dev",
+        "zendframework/zend-crypt": "*",
+        "pagerfanta/pagerfanta": "1.0.*@dev"
+    },
+    "require-dev": {
+        "sebastian/phpcpd": "*",
+        "mockery/mockery": "dev-master@dev"
+    },
+    "minimum-stability": "dev",
+    "autoload": {
+    "psr-0": {
+      "Windcell\\": "src/"
+
+    }
+  }
+}

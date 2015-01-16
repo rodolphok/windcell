@@ -1,0 +1,69 @@
+{% extends "layout_not_logged.twig" %}
+{% block content %}
+	<div class="container margin20">
+		<div class="col-md-4 col-md-offset-4 ">
+			{% for flashMessage in app.session.flashbag.get('message') %}
+				<div class="text-center center-block">
+		            <h4>
+		            	<span class="label label-danger">
+			                {{ flashMessage }}
+			            </span>
+			        </h4>
+			    </div>
+	        {% endfor %}
+
+			<form  action="/ddd/create" method="POST">
+				<div class="row">
+					<div class="col-md-6">
+						<div>
+							<label for="name">Nome *</label>
+							<input type="text" name="ddd" id="ddd" class="form-control" required value="{{ ddd and ddd.ddd ? ddd.ddd : "" }}" />
+						</div>
+
+
+					</div>
+					<div class="col-md-6">
+
+						<div class="row submit">
+							<button class="btn btn-success" type="submit" title="Salvar cliente">Salvar</button>
+						</div>
+					</div>
+				</div>
+			</form>
+
+			<h3>{{ title }}</h3>
+
+				<table class="lista table table-striped table-condensed">
+					<thead>
+					<tr>
+						<th> {{ '#' }} </th>
+						<th> {{ 'Número' }} </th>
+						<th> {{ 'Opções' }} </th>
+
+					</tr>
+					</thead>
+					<tbody>
+					{% for ddd in ddds %}
+						<tr>
+							<td> <span>{{ ddd.id|e }}</span> </td>
+							<td> {{ ddd.ddd|e }} </td>
+							<td>
+								<a data-href="/ddd/delete/{{ ddd.id }}" data-toggle="confirmation" class="glyphicon glyphicon-remove margin20 edit" title="Apagar usuário"></a>
+								<a href="/ddd/edit/{{ ddd.id }}" title="Editar usuário" class="edit"><i class="glyphicon glyphicon-pencil"></i>editar</a>
+
+							</td>
+
+						</tr>
+					{% else %}
+						<tr>
+							<td colspan="4">{{ 'Nenhum DDD foi criado.' }}</td>
+						</tr>
+					{% endfor %}
+					</tbody>
+				</table>
+
+
+
+		</div>
+	</div>
+{% endblock %}

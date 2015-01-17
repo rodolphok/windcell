@@ -46,9 +46,12 @@ $app->before(function (Request $request) use ($app) {
     if (!is_array($target)) {
         $target = explode(':', $target, 2);
     }
-    list($controller, $action) = $target;
-    $valid = forward_static_call_array(array($controller, 'isPublic'), array($action));
 
+    list($controller, $action) = $target;
+   // var_dump($target);die;
+
+    $valid = forward_static_call_array(array($controller, 'isPublic'), array($action));
+     //var_dump($valid);die;
     // If the url is public, the user can access =)
     if ($valid) {
         return;
@@ -59,22 +62,42 @@ $app->before(function (Request $request) use ($app) {
         return $app->redirect('/');
     }
 
-    // If the user is an admin, he can access anything
-    if ($app['session']->get('role') == 'admin') {
-        return;
+    if($app['session']->get('role') == 'admin'){
+
+        // Check if the action is accessible by guest users
+        $validAdmin = forward_static_call_array(array($controller, 'isAdmin'), array($action));
+
+
+
+        //Common users only access the /project controller
+        if (!$validAdmin) {
+            return $app->redirect('/admin');
+        }
+
+
     }
 
-    // Check if the action is accessible by guest users
-    $validVendedor = forward_static_call_array(array($controller, 'isVendedor'), array($action));
+    if($app['session']->get('role') == 'vendedor'){
 
-    //Common users only access the /project controller
-    if (!$validVendedor) {
-        return $app->redirect('/vendedor');
+        // Check if the action is accessible by guest users
+        $validVendedor = forward_static_call_array(array($controller, 'isVendedor'), array($action));
+
+
+        //Common users only access the /project controller
+        if (!$validVendedor) {
+            return $app->redirect('/vendedor');
+        }
+
+
     }
+
+
+
 
 });
 
 $app->mount('/', new Windcell\Controller\IndexController);
+$app->mount('/admin', new Windcell\Controller\AdminController);
 $app->mount('/admin/ddd', new Windcell\Controller\DDDController);
 $app->mount('/admin/loja', new Windcell\Controller\LojaController);
 $app->mount('/admin/ipc', new Windcell\Controller\IpcController);

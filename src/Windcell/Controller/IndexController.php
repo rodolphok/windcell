@@ -79,8 +79,11 @@ class IndexController extends BaseController
 
 
         if ($user->getRole() == 'admin') {
-            return $app->redirect('/admin/user');
+
+            return $app->redirect('/admin');
+
         }else if($user->getRole() == 'vendedor'){
+
             return $app->redirect('/vendedor');
         }
 

@@ -13,16 +13,6 @@ use Pagerfanta\Adapter\DoctrineCollectionAdapter;
 
 class UserController extends BaseController
 {
-    public static function getAdminActions()
-    {
-        return array('getIndex','create','edit','delete');
-    }
-
-    public static function onlyAdmin()
-    {
-        return true;
-    }
-
 
     public function mount($controller)
     {

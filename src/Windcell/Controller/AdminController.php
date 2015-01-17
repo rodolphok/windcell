@@ -8,15 +8,13 @@ use Symfony\Component\HttpFoundation\Response;
 //use Orcamentos\Service\Dashboard as DashboardService;
 use Zend\Crypt\Password\Bcrypt;
 
-class VendedorController extends BaseController
+class AdminController extends BaseController
 {
 
-    public static function getVendedorActions()
+    public static function getAdminActions()
     {
         return array('getIndex');
     }
-
-
 
     public function mount($controller)
     {
@@ -28,7 +26,7 @@ class VendedorController extends BaseController
     {
 
 
-        return $app['twig']->render('vendedor/index.twig');
+        return $app['twig']->render('admin/index.twig');
 
     }
 

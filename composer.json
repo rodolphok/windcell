@@ -6,7 +6,6 @@
         "symfony/http-kernel": "*",
         "symfony/browser-kit": "*",
         "symfony/console": "*",
-        "symfony/security": "*",
         "doctrine/dbal": "*",
         "doctrine/orm": "*",
         "twig/twig": ">=1.8,<2.0-dev",

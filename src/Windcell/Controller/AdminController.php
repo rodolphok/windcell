@@ -26,7 +26,7 @@ class AdminController extends BaseController
     {
 
 
-        return $app['twig']->render('admin/index.twig');
+        return $app['twig']->render('index.twig');
 
     }
 

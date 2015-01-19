@@ -9,6 +9,10 @@ use Windcell\Service\Ld as LdService;
 
 class LdController extends BaseController
 {
+    public static function getAdminActions()
+    {
+        return array('getIndex','create','edit');
+    }
 
     public function mount($controller)
     {
@@ -30,7 +34,7 @@ class LdController extends BaseController
             'lds' => $lds,
 
         );
-        return $app['twig']->render('admin/ld/index.twig', $data);
+        return $app['twig']->render('ld/index.twig', $data);
     }
 
     public function create(Request $request, Application $app)
@@ -44,7 +48,7 @@ class LdController extends BaseController
         $ldService->setEm($app['orm.em']);
         $ld = $ldService->save($data);
 
-       return $app->redirect('admin/ld');
+       return $app->redirect('/ld');
 
     }
 
@@ -55,7 +59,7 @@ class LdController extends BaseController
 
         }
         return $app['twig']->render(
-            'admin/ld/edit.twig',
+            'ld/edit.twig',
             array(
                 'ld' => $ld,
                 'active_page' => 'ld'

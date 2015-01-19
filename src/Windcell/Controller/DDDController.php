@@ -9,6 +9,10 @@ use Windcell\Service\DDD as DDDService;
 
 class DDDController extends BaseController
 {
+    public static function getAdminActions()
+    {
+        return array('getIndex','create','edit','delete');
+    }
 
     public function mount($controller)
     {
@@ -30,7 +34,7 @@ class DDDController extends BaseController
             'ddds' => $ddds,
 
         );
-        return $app['twig']->render('admin/ddd/index.twig', $data);
+        return $app['twig']->render('ddd/index.twig', $data);
     }
 
     public function create(Request $request, Application $app)
@@ -43,7 +47,7 @@ class DDDController extends BaseController
         $dddService->setEm($app['orm.em']);
         $ddd = $dddService->save($data);
 
-       return $app->redirect('admin/ddd');
+       return $app->redirect('/ddd');
 
     }
 
@@ -51,12 +55,14 @@ class DDDController extends BaseController
     {
         if (isset($dddId)) {
             $ddd = $app['orm.em']->getRepository('Windcell\Model\DDD')->find($dddId);
+            $ddds = $app['orm.em']->getRepository('Windcell\Model\DDD')->findAll();
 
         }
         return $app['twig']->render(
-            'admin/ddd/edit.twig',
+            'ddd/index.twig',
             array(
                 'ddd' => $ddd,
+                'ddds' => $ddds,
                 'active_page' => 'ddd'
             )
         );
@@ -69,7 +75,7 @@ class DDDController extends BaseController
         $em->remove($ddds);
         $em->flush();
 
-        return $app->redirect('admin/ddd');
+        return $app->redirect('/ddd');
     }
 
 }

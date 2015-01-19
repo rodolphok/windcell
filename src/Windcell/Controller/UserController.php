@@ -14,6 +14,11 @@ use Pagerfanta\Adapter\DoctrineCollectionAdapter;
 class UserController extends BaseController
 {
 
+    public static function getAdminActions()
+    {
+        return array('getIndex');
+    }
+
     public function mount($controller)
     {
         $controller->get('/', array($this, 'getIndex'));
@@ -35,7 +40,7 @@ class UserController extends BaseController
             'lojas' => $lojas,
 
         );
-        return $app['twig']->render('admin/user/index.twig', $data);
+        return $app['twig']->render('user/index.twig', $data);
     }
 
     public function edit(Request $request, Application $app, $userId)
@@ -45,7 +50,7 @@ class UserController extends BaseController
             $user = $app['orm.em']->getRepository('Windcell\Model\User')->find($userId);
         }
         return $app['twig']->render(
-            'admin/user/edit.twig',
+            'user/edit.twig',
             array(
                 'user' => $user,
                 'active_page' => 'user'
@@ -62,7 +67,7 @@ class UserController extends BaseController
         $userService = new UserService();
         $userService->setEm($app['orm.em']);
         $user = $userService->save($data);
-        return $app->redirect('admin/user');
+        return $app->redirect('/user');
     }
 
 
@@ -73,6 +78,6 @@ class UserController extends BaseController
         $em->remove($users);
         $em->flush();
 
-        return $app->redirect('admin/user');
+        return $app->redirect('/user');
     }
 }

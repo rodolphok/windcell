@@ -10,11 +10,15 @@ use Windcell\Service\Dependente as DependenteService;
 class DependenteController extends BaseController
 {
 
+    public static function getAdminActions()
+    {
+        return array('getIndex','create','edit');
+    }
+
     public function mount($controller)
     {
         $controller->get('/', array($this, 'getIndex'));
         $controller->post('/create', array($this, 'create'));
-
         $controller->get('/edit/{dependenteId}', array($this, 'edit'))->value("dependenteId", null);
 
     }
@@ -30,7 +34,7 @@ class DependenteController extends BaseController
             'dependentes' => $dependentes,
 
         );
-        return $app['twig']->render('admin/dependente/index.twig', $data);
+        return $app['twig']->render('dependente/index.twig', $data);
     }
 
     public function create(Request $request, Application $app)
@@ -44,7 +48,7 @@ class DependenteController extends BaseController
         $dependenteService->setEm($app['orm.em']);
         $dependente = $dependenteService->save($data);
 
-       return $app->redirect('admin/dependente');
+       return $app->redirect('/dependente');
 
     }
 
@@ -55,7 +59,7 @@ class DependenteController extends BaseController
 
         }
         return $app['twig']->render(
-            'admin/dependente/edit.twig',
+            'dependente/edit.twig',
             array(
                 'dependente' => $dependente,
                 'active_page' => 'dependente'

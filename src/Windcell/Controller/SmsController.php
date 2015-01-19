@@ -10,6 +10,11 @@ use Windcell\Service\Sms as SmsService;
 class SmsController extends BaseController
 {
 
+    public static function getAdminActions()
+    {
+        return array('getIndex','create','edit','delete');
+    }
+
     public function mount($controller)
     {
         $controller->get('/', array($this, 'getIndex'));
@@ -30,7 +35,7 @@ class SmsController extends BaseController
             'smss' => $smss,
 
         );
-        return $app['twig']->render('admin/sms/index.twig', $data);
+        return $app['twig']->render('sms/index.twig', $data);
     }
 
     public function create(Request $request, Application $app)
@@ -44,7 +49,7 @@ class SmsController extends BaseController
         $smsService->setEm($app['orm.em']);
         $sms = $smsService->save($data);
 
-       return $app->redirect('admin//sms');
+       return $app->redirect('/sms');
 
     }
 
@@ -55,7 +60,7 @@ class SmsController extends BaseController
 
         }
         return $app['twig']->render(
-            'admin/sms/edit.twig',
+            'sms/edit.twig',
             array(
                 'sms' => $sms,
                 'active_page' => 'sms'

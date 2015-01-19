@@ -71,7 +71,7 @@ $app->before(function (Request $request) use ($app) {
 
         //Common users only access the /project controller
         if (!$validAdmin) {
-            return $app->redirect('/admin');
+            return $app->redirect('/');
         }
 
 
@@ -97,16 +97,16 @@ $app->before(function (Request $request) use ($app) {
 });
 
 $app->mount('/', new Windcell\Controller\IndexController);
-$app->mount('/admin', new Windcell\Controller\AdminController);
-$app->mount('/admin/ddd', new Windcell\Controller\DDDController);
-$app->mount('/admin/loja', new Windcell\Controller\LojaController);
-$app->mount('/admin/ipc', new Windcell\Controller\IpcController);
-$app->mount('/admin/ld', new Windcell\Controller\LdController);
-$app->mount('/admin/sms', new Windcell\Controller\SmsController);
-$app->mount('/admin/dependente', new Windcell\Controller\DependenteController);
-$app->mount('/admin/plano', new Windcell\Controller\PlanoController);
-$app->mount('/admin/user', new Windcell\Controller\UserController);
+$app->mount('/ddd', new Windcell\Controller\DDDController);
+$app->mount('/loja', new Windcell\Controller\LojaController);
+$app->mount('/ipc', new Windcell\Controller\IpcController);
+$app->mount('/ld', new Windcell\Controller\LdController);
+$app->mount('/sms', new Windcell\Controller\SmsController);
+$app->mount('/dependente', new Windcell\Controller\DependenteController);
+$app->mount('/plano', new Windcell\Controller\PlanoController);
+$app->mount('/user', new Windcell\Controller\UserController);
 $app->mount('/vendedor', new Windcell\Controller\VendedorController);
+$app->mount('/vendedor/venda', new Windcell\Controller\VendaController);
 
 //getting the EntityManager
 $app->register(new DoctrineServiceProvider, array(

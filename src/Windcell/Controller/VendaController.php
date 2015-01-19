@@ -7,12 +7,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Windcell\Service\Venda as VendaService;
 
-class VendedorController extends BaseController
+class VendaController extends BaseController
 {
 
     public static function getVendedorActions()
     {
-        return array('getIndex');
+        return array('getIndex','create');
     }
 
 
@@ -25,8 +25,20 @@ class VendedorController extends BaseController
 
     public function getIndex(Request $request, Application $app)
     {
+        $ddds = $app['orm.em']->getRepository('Windcell\Model\DDD')->findAll();
+        $planos = $app['orm.em']->getRepository('Windcell\Model\Plano')->findAll();
+        $ipcs = $app['orm.em']->getRepository('Windcell\Model\Ipc')->findAll();
 
-        return $app['twig']->render('vendedor/index.twig');
+        $data = array(
+
+
+            'ddds' => $ddds,
+            'planos' => $planos,
+            'ipcs' => $ipcs,
+
+        );
+
+        return $app['twig']->render('vendedor/venda/index.twig',$data);
 
     }
 
@@ -39,9 +51,9 @@ class VendedorController extends BaseController
 
         $vendaService = new VendaService();
         $vendaService->setEm($app['orm.em']);
-        $venda = $vendaService->save($data);
+        $venda = $vendaService->save($data, $app);
 
-        return $app->redirect('vendedor');
+        return $app->redirect($_SERVER['HTTP_REFERER']);
 
     }
 

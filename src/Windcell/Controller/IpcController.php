@@ -10,6 +10,11 @@ use Windcell\Service\Ipc as IpcService;
 class IpcController extends BaseController
 {
 
+    public static function getAdminActions()
+    {
+        return array('getIndex','create','edit','delete');
+    }
+
     public function mount($controller)
     {
         $controller->get('/', array($this, 'getIndex'));
@@ -30,7 +35,7 @@ class IpcController extends BaseController
             'ipcs' => $ipcs,
 
         );
-        return $app['twig']->render('admin/ipc/index.twig', $data);
+        return $app['twig']->render('ipc/index.twig', $data);
     }
 
     public function create(Request $request, Application $app)
@@ -44,7 +49,7 @@ class IpcController extends BaseController
         $ipcService->setEm($app['orm.em']);
         $ipc = $ipcService->save($data);
 
-       return $app->redirect('admin/ipc');
+        return $app->redirect($_SERVER['HTTP_REFERER']);
 
     }
 
@@ -55,7 +60,7 @@ class IpcController extends BaseController
 
         }
         return $app['twig']->render(
-            'admin/ipc/edit.twig',
+            'ipc/edit.twig',
             array(
                 'ipc' => $ipc,
                 'active_page' => 'ipc'
@@ -70,7 +75,7 @@ class IpcController extends BaseController
         $em->remove($ipcs);
         $em->flush();
 
-        return $app->redirect('admin/ipc');
+        return $app->redirect('/ipc');
     }
 
 }

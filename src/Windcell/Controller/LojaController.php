@@ -9,6 +9,10 @@ use Windcell\Service\Loja as LojaService;
 
 class LojaController extends BaseController
 {
+    public static function getAdminActions()
+    {
+        return array('getIndex','create','edit','delete');
+    }
 
     public function mount($controller)
     {
@@ -44,7 +48,7 @@ class LojaController extends BaseController
         $lojaService->setEm($app['orm.em']);
         $loja = $lojaService->save($data);
 
-       return $app->redirect('admin/loja');
+       return $app->redirect('/loja');
 
     }
 
@@ -55,7 +59,7 @@ class LojaController extends BaseController
 
         }
         return $app['twig']->render(
-            'admin/loja/edit.twig',
+            'loja/edit.twig',
             array(
                 'loja' => $loja,
                 'active_page' => 'loja'
@@ -70,7 +74,7 @@ class LojaController extends BaseController
         $em->remove($lojas);
         $em->flush();
 
-        return $app->redirect('admin/loja');
+        return $app->redirect('/loja');
     }
 
 }

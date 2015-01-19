@@ -1,0 +1,91 @@
+{% extends "layout.twig" %}
+{% block content %}
+    <div class="container margin20 col-md-offset-3">
+
+            {% for flashMessage in app.session.flashbag.get('message') %}
+                <div class="text-center center-block">
+                    <h4>
+		            	<span class="label label-danger">
+			                {{ flashMessage }}
+			            </span>
+                    </h4>
+                </div>
+            {% endfor %}
+
+            <form  action="create" method="POST">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div>
+                            <label for="nme">Nome *</label>
+                            <input type="text" name="name" id="name" class="form-control " required value="{{ venda and venda.name ? venda.name : "" }}" />
+                        </div>
+                        <div>
+
+                            <label for="loja">DDD *</label><br>
+                            <select id="ddd" name="ddd" class="form-control ">
+                                {% for ddd in ddds %}
+                                    <option value="{{ ddd.id }}" {{ venda and ddd.id == venda.ddd.id ? 'selected="selected"' : "" }}>{{ ddd.ddd }}</option>
+                                {% endfor %}
+                            </select>
+
+                        </div>
+                        <div>
+                            <label for="name">Numero *</label>
+                            <input type="text" name="numero" id="numero" class="form-control " required value="{{ venda and venda.numeror ? venda.numero : "" }}" />
+                        </div>
+                        <div>
+                            <label for="name">CPF *</label>
+                            <input type="text" name="cpf" id="cpf" class="form-control" required value="{{ venda and venda.numero ? venda.numero : "" }}" />
+                        </div>
+                        <div>
+
+                            <label for="loja">Plano *</label><br>
+                            <select id="plano" name="plano" class="form-control">
+                                {% for plano in planos %}
+                                    <option value="{{ plano.id }}" {{ venda and plano.id == venda.plano.id ? 'selected="selected"' : "" }}>{{ plano.name }}</option>
+                                {% endfor %}
+                            </select>
+
+                        </div>
+
+                        <div>
+
+                            <label for="loja">Ipc *</label><br>
+                            <select id="ipc" name="ipc" class="form-control">
+                                {% for ipc in ipcs %}
+                                    <option value="{{ ipc.id }}" {{ venda and ipc.id == venda.ipc.id ? 'selected="selected"' : "" }}>{{ ipc.name }}</option>
+                                {% endfor %}
+                            </select>
+
+                        </div>
+                        <div class="row">
+
+                            <label>
+                                <input type="checkbox" name="sms" id="sms"> SMS
+                            </label>
+
+
+
+                            <label>
+                                <input type="checkbox" name="ld" id="ld"> LD
+                            </label>
+
+                        </div>
+
+                        <div class="col-md-6">
+
+                        <div class="row submit">
+                            <button class="btn btn-success" type="submit" title="Salvar cliente">Salvar</button>
+                        </div>
+                    </div>
+
+                    </div>
+
+                </div>
+            </form>
+
+
+
+        </div>
+    </div>
+{% endblock %}

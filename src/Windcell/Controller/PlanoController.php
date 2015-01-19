@@ -14,6 +14,11 @@ use \IntlDateFormatter;
 class PlanoController extends BaseController
 {
 
+    public static function getAdminActions()
+    {
+        return array('getIndex','create','edit','delete');
+    }
+
     public function mount($controller)
     {
         $controller->get('/', array($this, 'getIndex'));
@@ -48,7 +53,7 @@ class PlanoController extends BaseController
         $planoService = new PlanoService();
         $planoService->setEm($app['orm.em']);
         $plano = $planoService->save($data);
-        return $app->redirect('admin/plano');
+        return $app->redirect('/plano');
     }
 
     public function edit(Request $request, Application $app, $planoId)
@@ -59,7 +64,7 @@ class PlanoController extends BaseController
 
         }
         return $app['twig']->render(
-            'admin/plano/edit.twig',
+            'plano/edit.twig',
             array(
                 'plano' => $plano,
                 'lojas' => $lojas,

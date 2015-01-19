@@ -17,6 +17,7 @@ class IndexController extends BaseController
         return array('getIndex', 'getLogout', 'postLogin');
     }
 
+
     public function mount($controller)
     {
         $controller->get('/', array($this, 'getIndex'));
@@ -27,8 +28,12 @@ class IndexController extends BaseController
     public function getIndex(Request $request, Application $app)
     {
 
-        if ($app['session']->get('login') == null) {
+        if ($app['session']->get('login') == null ) {
             return $app['twig']->render('login.twig', array());
+        }
+
+        if($app['session']->get('role') == 'vendedor'){
+            return $app->redirect('vendedor/');
         }
 
         $lojaId = $app['session']->get('lojaId');
@@ -37,7 +42,7 @@ class IndexController extends BaseController
         //$dashboardService->setEm($app['orm.em']);
         //$result = $dashboardService->getData(json_encode($data));
 
-        return $app['twig']->render('admin/index/index.twig', array(
+        return $app['twig']->render('index/index.twig', array(
             //'result' => $result,
             'active_page' => 'panel'
         ));
@@ -72,6 +77,7 @@ class IndexController extends BaseController
         $app['session']->set('login', $data['login']);
         $app['session']->set('role', $user->getRole());
         $app['session']->set('name', $user->getName());
+        $app['session']->set('userId', $user->getId());
         //$app['session']->set('isAdmin', $user->getAdmin());
         $app['session']->set('lojaId', $user->getLoja()->getId());
         //$app['session']->set('companyLogotype', $user->getCompany()->getLogotype());
@@ -80,7 +86,7 @@ class IndexController extends BaseController
 
         if ($user->getRole() == 'admin') {
 
-            return $app->redirect('/admin');
+            return $app->redirect('/');
 
         }else if($user->getRole() == 'vendedor'){
 

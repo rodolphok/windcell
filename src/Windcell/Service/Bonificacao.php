@@ -14,6 +14,7 @@ class Bonificacao extends Service{
 
         $array = array();
         $vendas = array();
+
         for($i=0; $i<$c; $i++){
 
             $query = $this->em->createQuery("SELECT v FROM Windcell\Model\Venda v WHERE v.numero = :numero");
@@ -32,7 +33,6 @@ class Bonificacao extends Service{
             }
         }
 
-        //var_dump($vendas);die;
         return $vendas;
 
     }

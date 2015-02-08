@@ -37,18 +37,12 @@ class BonificacaoController extends BaseController
 
         $bonificacaoService = new BonificacaoService();
         $bonificacaoService->setEm($app['orm.em']);
-        $array = $bonificacaoService->getData($data);
+        $result = $bonificacaoService->getData($data);
 
-        foreach($array as $key => $arr_uni)
-        {
-            foreach($arr_uni as $key2 => $value)
-            {
-                $new_arr_uni[] = $value;
-            }
-        }
+
 
         return $app['twig']->render('bonificacao/index.twig', array(
-            'result' => $new_arr_uni,
+            'result' => $result,
         ));
     }
 

@@ -34,7 +34,6 @@ class DDD extends Service{
         }
     }
 
-
     private function getDDD($data)
     {
 
@@ -50,6 +49,37 @@ class DDD extends Service{
         }
 
         return $ddd;
+    }
+
+    public function findAll()
+    {
+        $ddds = $this->em->getRepository('Windcell\Model\DDD')->findAll();
+
+        return $ddds;
+    }
+
+    public function findById($dddId)
+    {
+        $ddd = null;
+        $ddd = $this->em->getRepository('Windcell\Model\DDD')->find($dddId);
+
+        return $ddd;
+    }
+
+    public function delete($dddId)
+    {
+        $ddd= $this->findById($dddId);
+
+        try {
+
+            $this->em->remove($ddd);
+            $this->em->flush();
+
+        } catch (Exception $e) {
+
+            echo $e->getMessage();
+
+        }
     }
 
 }

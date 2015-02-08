@@ -5,7 +5,7 @@ namespace Windcell\Controller;
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-//use Orcamentos\Service\Dashboard as DashboardService;
+use Windcell\Service\Dashboard as DashboardService;
 use Zend\Crypt\Password\Bcrypt;
 
 class IndexController extends BaseController
@@ -38,12 +38,13 @@ class IndexController extends BaseController
 
         $lojaId = $app['session']->get('lojaId');
         $data = array('lojaId' => $lojaId);
-        //$dashboardService = new DashboardService();
-        //$dashboardService->setEm($app['orm.em']);
-        //$result = $dashboardService->getData(json_encode($data));
+        $dashboardService = new DashboardService();
+        $dashboardService->setEm($app['orm.em']);
+        $result = $dashboardService->getData(json_encode($data));
 
+        //var_dump($result);die;
         return $app['twig']->render('index/index.twig', array(
-            //'result' => $result,
+            'result' => $result,
             'active_page' => 'panel'
         ));
 

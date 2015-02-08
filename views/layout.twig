@@ -7,30 +7,21 @@
         {% include "header.twig" %}
     </head>
     <body>
-        <!--[if lt IE 7]>
-        <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
+
         <header>
-            <nav class="navbar navbar-custom" role="navigation">
-                <span class="bg"></span>
+            <nav class="navbar navbar-inverse navbar-fixed-top " role="navigation">
                 <div class="container">
-                    <div class="row">
-                        <div class="col-md-7 clearfix">
+
                             <div class="navbar-header clearfix">
                                 <span>
                                     {% if app.session.get('isAdmin') %}
-                                    <a href="/company">
-                                        {% if app.session.get('companyLogotype') != null %}
-                                            <img src="/public/img/logotypes/{{ app.session.get('companyLogotype') }}" width="100" height="100" />
-                                        {% else %}
-                                            <img src="/public/img/photo_g.jpg" width="100" height="100" />
-                                        {% endif %}
-                                    </a>
-                                    <h1>
                                         <a href="/company">
-                                            {{ app.session.get('companyName') }}
+                                            {% if app.session.get('companyLogotype') != null %}
+                                                <img src="/public/img/logotypes/{{ app.session.get('companyLogotype') }}" width="100" height="100" />
+                                            {% else %}
+                                                <img src="/public/img/photo_g.jpg" width="100" height="100" />
+                                            {% endif %}
                                         </a>
-                                    </h1>
                                         <a href="/company">
                                             <small>editar</small>
                                         </a>
@@ -41,32 +32,68 @@
                                             <img src="/public/img/photo_g.jpg" width="100" height="100" />
                                         {% endif %}
                                         <h1>
-                                            {{ app.session.get('companyName') }}
+                                            {{ app.session.get('name') }}
                                         </h1>
                                     {% endif  %}
                                     <a href="/logout">
                                         <small>sair</small>
                                     </a>
                                 </span>
-                            <div class="clearfix"></div>
                             </div>
-                        </div>
-                        <div class="col-md-5">
-                            <div class="collapse navbar-collapse">
-                                <ul class="nav navbar-nav navbar-right">
-                                    {% if app.session.get('isAdmin') %}
-                                        <li><a href="/" title="Dashboard" {{ active_page is defined and active_page == 'panel' ? 'class="current"' : ""}}>Painel</a></li>
-                                        <li><a href="/status" title="Gerenice seus Orçamentos" {{  active_page is defined and  active_page == 'status' ? 'class="current"' : ""}}>Status board</a></li>
-                                        <li><a href="/client" title="Gerenice seus clientes" {{  active_page is defined and  active_page == 'client' ? 'class="current"' : ""}}>Clientes</a></li>
-                                    {% endif %}
-                                    <li><a href="/project" title="Gerencie seus projetos" {{  active_page is defined and  active_page == 'project' ? 'class="current"' : ""}}>Projetos</a></li>
+
+
+
+
+                    <div class="collapse navbar-collapse">
+                        {% if app.session.get('role') == 'admin' %}
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Cadastros<b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li class=""><a href="/loja">Loja</a></li>
+                                    <li class=""><a href="/user">Usuário</a></li>
+                                    <li class=""><a href="/ddd">DDD</a></li>
+                                    <li class=""><a href="/ipc">IPC</a></li>
+                                    <li class=""><a href="/plano">Plano</a></li>
+                                    <li class=""><a href="/ld">LD</a></li>
+                                    <li class=""><a href="/sms">SMS</a></li>
+                                    <li class=""><a href="/dependente">Dependente</a></li>
+
+                                    <li class=""><a href="#">Vendas</a></li>
+
                                 </ul>
-                            <div class="clearfix"></div>
-                            </div>
-                        </div>
-                    </div>
+                            </li>
+
+                            <li><a href="/bonificacao">Bonificação</a></li>
+
+                            <li class="dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Relatórios<b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li class=""><a href="#">Números Pagos</a></li>
+                                    <li class=""><a href="#">Números Ñ Pagos</a></li>
+                                    <li class=""><a href="#">Números por Vendedor</a></li>
+                                    <li class=""><a href="#">Resgate</a></li>
+                                    <li class=""><a href="#">Adicionais Pagos'</a></li>
+                                    <li class=""><a href="#">Adicionais Ñ Pagos</a></li>
+                                    <li class=""><a href="#">Comissão</a></li>
+                                    <li class=""><a href="#">Vendas Geral</a></li>
+                                </ul>
+                            </li>
+
+                            <li class="dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Utilitátios<b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li class=""><a href="#">Backup</a></li>
+                                    <li class=""><a href="#">Calculadora</a></li>
+                                </ul>
+                            </li>
+
+                        </ul>
+                        {% endif  %}
+                    </div><!--/.nav-collapse -->
                 </div>
             </nav>
+
         </header>
         <div id="main" class="container">
             {% for flashMessage in app.session.flashbag.get('message') %}

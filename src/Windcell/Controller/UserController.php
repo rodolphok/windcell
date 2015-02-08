@@ -13,11 +13,16 @@ use Pagerfanta\Adapter\DoctrineCollectionAdapter;
 
 class UserController extends BaseController
 {
-
     public static function getAdminActions()
     {
-        return array('getIndex');
+        return array('getIndex','create','edit','delete');
     }
+
+    public static function onlyAdmin()
+    {
+        return true;
+    }
+
 
     public function mount($controller)
     {
@@ -50,7 +55,7 @@ class UserController extends BaseController
             $user = $app['orm.em']->getRepository('Windcell\Model\User')->find($userId);
         }
         return $app['twig']->render(
-            'user/edit.twig',
+            'admin/user/edit.twig',
             array(
                 'user' => $user,
                 'active_page' => 'user'

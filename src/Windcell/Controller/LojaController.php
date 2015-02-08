@@ -55,7 +55,11 @@ class LojaController extends BaseController
     public function edit(Request $request, Application $app, $lojaId)
     {
         if (isset($lojaId)) {
-            $loja = $app['orm.em']->getRepository('Windcell\Model\Loja')->find($lojaId);
+            $lojaService = new LojaService();
+            $lojaService->setEm($app['orm.em']);
+            $loja = $lojaService->findById($lojaId);
+            $lojas = $lojaService->findAll();
+
 
         }
         return $app['twig']->render(
@@ -69,10 +73,9 @@ class LojaController extends BaseController
 
     public function delete(Request $request, Application $app, $lojaId)
     {
-        $em = $app['orm.em'];
-        $lojas = $em->getRepository('Windcell\Model\Loja')->find($lojaId);
-        $em->remove($lojas);
-        $em->flush();
+        $lojaService = new LojaService();
+        $lojaService->setEm($app['orm.em']);
+        $loja = $lojaService->delete($lojaId);
 
         return $app->redirect('/loja');
     }

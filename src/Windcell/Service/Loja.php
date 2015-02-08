@@ -52,4 +52,35 @@ class Loja extends Service{
         return $loja;
     }
 
+    public function findAll()
+    {
+        $lojas = $this->em->getRepository('Windcell\Model\Loja')->findAll();
+
+        return $lojas;
+    }
+
+    public function findById($lojaId)
+    {
+        $loja = null;
+        $loja = $this->em->getRepository('Windcell\Model\Loja')->find($lojaId);
+
+        return $loja;
+    }
+
+    public function delete($lojaId)
+    {
+        $loja = $this->findById($lojaId);
+
+        try {
+
+            $this->em->remove($loja);
+            $this->em->flush();
+
+        } catch (Exception $e) {
+
+            echo $e->getMessage();
+
+        }
+    }
+
 }

@@ -1,0 +1,51 @@
+{% extends "layout.twig" %}
+{% block content %}
+	<div class="container margin20">
+		<div class="col-md-4 col-md-offset-4 ">
+			{% for flashMessage in app.session.flashbag.get('message') %}
+				<div class="text-center center-block">
+		            <h4>
+		            	<span class="label label-danger">
+			                {{ flashMessage }}
+			            </span>
+			        </h4>
+			    </div>
+	        {% endfor %}
+
+			<form  method="POST" action="consult">
+				<div class="row">
+					<div class="col-md-6">
+						<div>
+							<label for="name">Numeros *</label>
+							<input type="text" name="numeros" id="numeros" class="form-control" required  />
+						</div>
+
+
+					</div>
+					<div class="col-md-6">
+
+						<div class="row submit">
+							<button class="btn btn-success" type="submit" title="Salvar cliente">Salvar</button>
+						</div>
+					</div>
+				</div>
+			</form>
+
+			<div>
+				{% for  venda in result %}
+					<div class="media">
+						<div class="media-body">
+							<p class="email-summary">
+								<strong>{{ venda.id }}</strong> | <strong>{{ venda.numero }}</strong> | <strong>{{ venda.vendedor.name }}</strong>| <input type="checkbox" name="status" id="status" {{ venda and venda.status ? 'checked="checked"' : "" }}></strong>
+							</p>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+
+
+
+
+		</div>
+	</div>
+{% endblock %}

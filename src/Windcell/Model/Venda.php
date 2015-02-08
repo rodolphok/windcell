@@ -74,6 +74,13 @@ class Venda extends Entity{
     private $valor;
 
     /**
+     * @ORM\Column(type="boolean")
+     *
+     * @var int
+     */
+    private $status;
+
+    /**
      * @return mixed
      */
     public function getName()
@@ -215,6 +222,22 @@ class Venda extends Entity{
     public function setValor($valor)
     {
         $this->valor = $valor;
+    }
+
+    /**
+     * @return int
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * @param int $status
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
     }
 
 

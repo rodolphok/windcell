@@ -25,11 +25,11 @@ class DDDController extends BaseController
 
     public function getIndex(Request $request, Application $app)
     {
-
-        $ddds = $app['orm.em']->getRepository('Windcell\Model\DDD')->findAll();
+        $dddService = new DDDService();
+        $dddService->setEm($app['orm.em']);
+        $ddds = $dddService->findAll();
 
         $data = array(
-
             'title' => 'Cadastrar DDD',
             'ddds' => $ddds,
 
@@ -54,8 +54,10 @@ class DDDController extends BaseController
     public function edit(Request $request, Application $app, $dddId)
     {
         if (isset($dddId)) {
-            $ddd = $app['orm.em']->getRepository('Windcell\Model\DDD')->find($dddId);
-            $ddds = $app['orm.em']->getRepository('Windcell\Model\DDD')->findAll();
+            $dddService = new DDDService();
+            $dddService->setEm($app['orm.em']);
+            $ddd = $dddService->findById($dddId);
+            $ddds = $dddService->findAll();
 
         }
         return $app['twig']->render(
@@ -70,10 +72,9 @@ class DDDController extends BaseController
 
     public function delete(Request $request, Application $app, $dddId)
     {
-        $em = $app['orm.em'];
-        $ddds = $em->getRepository('Windcell\Model\DDD')->find($dddId);
-        $em->remove($ddds);
-        $em->flush();
+        $dddService = new DDDService();
+        $dddService->setEm($app['orm.em']);
+        $ddd = $dddService->delete($dddId);
 
         return $app->redirect('/ddd');
     }

@@ -97,6 +97,7 @@ $app->before(function (Request $request) use ($app) {
 });
 
 $app->mount('/', new Windcell\Controller\IndexController);
+$app->mount('/bonificacao', new Windcell\Controller\BonificacaoController);
 $app->mount('/ddd', new Windcell\Controller\DDDController);
 $app->mount('/loja', new Windcell\Controller\LojaController);
 $app->mount('/ipc', new Windcell\Controller\IpcController);

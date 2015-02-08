@@ -15,11 +15,6 @@
         "zendframework/zend-crypt": "*",
         "pagerfanta/pagerfanta": "1.0.*@dev"
     },
-    "require-dev": {
-        "sebastian/phpcpd": "*",
-        "mockery/mockery": "dev-master@dev"
-    },
-    "minimum-stability": "dev",
     "autoload": {
     "psr-0": {
       "Windcell\\": "src/"

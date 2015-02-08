@@ -1,0 +1,25 @@
+{% extends "layout.twig" %}
+{% block content %}
+    <div class="row updates">
+        <div class="col-md-12">
+            <div class="jumbotron">
+                <div class="jumbotron-contents">
+                    <h4>Últimas Vendas</h4>
+                    <div>
+                        {% for venda in result %}
+                            <div class="media">
+                                <div class="media-body">
+                                    <span class="media-meta pull-right">{{ venda.created | date("d/m/Y H:i:s") }}</span>
+                                    <p class="email-summary">
+                                        <strong>{{ venda.loja.name }}</strong> | <strong>{{ venda.vendedor.name }}</strong> | <strong>{{ venda.numero }}</strong>
+                                    </p>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>   
+    </div>
+{% endblock %}
+

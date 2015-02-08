@@ -1,0 +1,66 @@
+{% extends "layout.twig" %}
+{% block content %}
+    <div class="row">
+        <div class="col-md-9">
+              {% if user is not null %}
+                <h3>Editar Usuário</h3>
+             {% else %}
+                <h3>Novo Usuário</h3>
+             {% endif %}   
+        </div>
+        <div class="col-md-3">
+        </div>
+    </div>
+    <form class="form" id="new_user" method="POST" action="/user/create">
+        <input type="hidden" name="id" value="{{ user ? user.id : "" }}" />
+        <div class="row">
+            <div class="col-md-6">
+                <div>
+                    <label for="name">Nome *</label>
+                    <input type="text" name="name" id="name" value="{{ user and user.name ? user.name : "" }}" required class="form-control" />
+                </div>
+                <div>
+                    <label for="email">Celular *</label>
+                    <input type="email" name="celular" id="celular" required value="{{ user ? user.celular : "" }}" class="form-control" />
+                </div>
+                <div>
+                    <label for="email">Login *</label>
+                    <input type="email" name="login" id="login" required value="{{ user ? user.login : "" }}" class="form-control" />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div>
+                    <label for="password">Senha *</label>
+                    <input type="password" name="password" id="password" value="{{ user and user.password ? user.password : "" }}" required class="form-control" />
+                </div>
+                <div>
+                    <label for="loja">Role *</label><br>
+                    <select id="role" name="role">
+
+                        <option value="admin" >Admin</option>
+                        <option value="vendedor" >Vendedor</option>
+
+                    </select> </div>
+
+                <div>
+
+                    <label for="loja">Loja *</label><br>
+                    <select id="loja" name="loja">
+                        {% for loja in lojas %}
+                            <option value="{{ loja.id }}" {{ user and loja.id == user.loja.id ? 'selected="selected"' : "" }}>{{ loja.name }}</option>
+                        {% endfor %}
+                    </select>
+
+                </div>
+            </div>
+        </div>
+        <div class="row submit">
+            <div class="col-md-6">
+                <a href="/user" class="btn btn-default" title="Cancelar cadastro">Cancelar</a>
+            </div>
+            <div class="col-md-6">
+                <button class="btn btn-success" type="submit" title="Salvar cliente">Salvar</button>
+            </div>
+        </div>
+    </form>
+{% endblock %}

@@ -13,6 +13,7 @@ class Bonificacao extends Service{
         $c = count($numeros);
 
         $array = array();
+        $vendas = array();
         for($i=0; $i<$c; $i++){
 
             $query = $this->em->createQuery("SELECT v FROM Windcell\Model\Venda v WHERE v.numero = :numero");

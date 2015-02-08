@@ -40,7 +40,6 @@ class BonificacaoController extends BaseController
         $result = $bonificacaoService->getData($data);
 
 
-
         return $app['twig']->render('bonificacao/index.twig', array(
             'result' => $result,
         ));

@@ -2,7 +2,6 @@
 namespace Windcell\Service;
 
 use Windcell\Model\Venda as VendaModel;
-use Windcell\Model\ComplementoVenda as ComplementoVendaModel;
 use Silex\Application;
 
 use Exception;
@@ -48,7 +47,6 @@ class Venda extends Service{
 
 
         $venda = $this->getVenda($data);
-        $compl_venda = $this->getComplementoVenda($data);
 
         if(!$venda->getVendedor()){
             $venda->setVendedor($vendedor);
@@ -75,19 +73,20 @@ class Venda extends Service{
         $venda->setNumero($data->numero);
         $venda->setCpf($data->cpf);
         $venda->setValor($valor_total);
-
-        $compl_venda->setVenda($venda);
-        $compl_venda->setSms($sms);
-        $compl_venda->setLd($ld);
-        $compl_venda->setValor($valor_complemento);
+        $venda->setSms($sms);
+        $venda->setLd($ld);
+        $venda->setValorComplemento($valor_complemento);
+        $venda->setStatusComplemento(0);
+        $venda->setStatus(0);
 
 
         try {
-
+           // var_dump($venda);die;
             $this->em->persist($venda);
-            $this->em->persist($compl_venda);
+
 
             $this->em->flush();
+
             return $venda;
 
         } catch (Exception $e) {
@@ -95,6 +94,38 @@ class Venda extends Service{
             echo $e->getMessage();
 
         }
+    }
+
+
+
+    public function alterStatus($id,$status){
+
+        $qb =  $this->em->createQueryBuilder();
+        $q = $qb->update('Windcell\Model\Venda', 'u')
+                ->set('u.status', '?1')
+                ->where('u.id = ?3')
+                ->setParameter(1, $status )
+                ->setParameter(3, $id)
+                ->getQuery();
+        $p = $q->execute();
+
+        return $p;
+
+    }
+
+    public function alterComplemento($id,$complemento){
+
+        $qb =  $this->em->createQueryBuilder();
+        $q = $qb->update('Windcell\Model\Venda', 'u')
+                ->set('u.statusCompl', '?1')
+                ->where('u.id = ?3')
+                ->setParameter(1, $complemento )
+                ->setParameter(3, $id)
+                ->getQuery();
+        $p = $q->execute();
+
+        return $p;
+
     }
 
     private function getVenda($data)
@@ -112,15 +143,8 @@ class Venda extends Service{
 
 
         return $venda;
-    }
+        }
     }
 
-    private function getComplementoVenda()
-    {
-            $compl_venda = new ComplementoVendaModel();
-
-            return $compl_venda;
-
-    }
 
 }

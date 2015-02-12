@@ -74,11 +74,41 @@ class Venda extends Entity{
     private $valor;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=false, options={"default":true})
      *
-     * @var int
+     *@var boolean
      */
     private $status;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     *
+     * @var string
+     */
+    private $sms;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     *
+     * @var string
+     */
+    private $ld;
+
+    /**
+     * @ORM\Column(type="string")
+     *
+     * @var string
+     */
+    private $valor_complemento;
+
+
+    /**
+     * @ORM\Column(type="boolean", nullable=false, options={"default":true})
+     *
+     *@var boolean
+     */
+    private $statusCompl;
+
 
     /**
      * @return mixed
@@ -239,6 +269,72 @@ class Venda extends Entity{
     {
         $this->status = $status;
     }
+
+
+    /**
+     * @return string
+     */
+    public function getSms()
+    {
+        return $this->sms;
+    }
+
+    /**
+     * @param string $sms
+     */
+    public function setSms($sms)
+    {
+        $this->sms = $sms;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLd()
+    {
+        return $this->ld;
+    }
+
+    /**
+     * @param string $ld
+     */
+    public function setLd($ld)
+    {
+        $this->ld = $ld;
+    }
+
+    /**
+     * @return string
+     */
+    public function getValorComplemento()
+    {
+        return $this->valor_complemento;
+    }
+
+    /**
+     * @param string $valor_complemento
+     */
+    public function setValorComplemento($valor_complemento)
+    {
+        $this->valor_complemento = $valor_complemento;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isStatusCompl()
+    {
+        return $this->statusCompl;
+    }
+
+    /**
+     * @param boolean $statusCompl
+     */
+    public function setStatusCompl($statusCompl)
+    {
+        $this->statusCompl = $statusCompl;
+    }
+
 
 
 }

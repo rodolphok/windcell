@@ -39,7 +39,7 @@ class VendedorController extends BaseController
 
         $vendaService = new VendaService();
         $vendaService->setEm($app['orm.em']);
-        $venda = $vendaService->save($data);
+        $vendaService->save($data);
 
         return $app->redirect('vendedor');
 

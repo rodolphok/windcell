@@ -25,9 +25,7 @@ class PlanoController extends BaseController
         $controller->post('/create', array($this, 'create'));
         $controller->get('/edit/{planoId}', array($this, 'edit'))->value("planoId", null);
         $controller->get('/delete/{planoId}', array($this, 'delete'));
-
     }
-
 
     public function getIndex(Request $request, Application $app)
     {
@@ -42,6 +40,7 @@ class PlanoController extends BaseController
             'lojas' => $lojas,
 
         );
+
         return $app['twig']->render('plano/index.twig', $data);
     }
 
@@ -52,7 +51,8 @@ class PlanoController extends BaseController
         $data = json_encode($data);
         $planoService = new PlanoService();
         $planoService->setEm($app['orm.em']);
-        $plano = $planoService->save($data);
+        $planoService->save($data);
+
         return $app->redirect('/plano');
     }
 
@@ -63,6 +63,7 @@ class PlanoController extends BaseController
             $lojas = $app['orm.em']->getRepository('Windcell\Model\Loja')->findAll();
 
         }
+
         return $app['twig']->render(
             'plano/edit.twig',
             array(
@@ -77,14 +78,10 @@ class PlanoController extends BaseController
     {
         $em = $app['orm.em'];
         $plano = $em->getRepository('Windcell\Model\Plano')->find($planoId);
-        $lojaId = $plano->getLoja()->getId();
+        $plano->getLoja()->getId();
         $em->remove($plano);
         $em->flush();
 
         return $app->redirect($_SERVER['HTTP_REFERER']);
     }
-
-
-
-
 }

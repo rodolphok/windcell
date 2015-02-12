@@ -1,5 +1,68 @@
 {% extends "layout.twig" %}
+
 {% block content %}
+	<script type="text/javascript">
+		$(document).ready(function(){
+
+			$("input[name='status[]']").click(function(){
+				if($(this).is(":checked")){
+					var status = 1;
+
+				}
+				else if($(this).is(":not(:checked)")){
+					var status = 0;
+
+				}
+
+				var $this = $( this );//guardando o ponteiro em uma variavel, por performance
+
+
+				//var status = $this.attr('checked') ? 1 : 0;
+				var id = $this.next('input').val();
+
+				$.ajax({
+					type:"POST",
+					url: 'getStatus',
+					data: 'status='+status+'&id='+id,
+
+					success: function( data ) {
+						console.log(data);
+					},
+
+				});
+			});
+
+			$("input[name='complemento[]']").click(function(){
+				if($(this).is(":checked")){
+					var complemento = 1;
+
+				}
+				else if($(this).is(":not(:checked)")){
+					var complemento = 0;
+
+				}
+
+				var $this = $( this );//guardando o ponteiro em uma variavel, por performance
+
+
+				//var status = $this.attr('checked') ? 1 : 0;
+				var id = $this.next('input').val();
+
+				$.ajax({
+					type:"POST",
+					url: 'getComplemento',
+					data: 'complemento='+complemento+'&id='+id,
+
+					success: function( data ) {
+						console.log(data);
+					},
+
+				});
+			});
+
+
+		});
+	</script>
 	<div class="container margin20">
 		<div class="col-md-4 col-md-offset-4 ">
 			{% for flashMessage in app.session.flashbag.get('message') %}
@@ -20,7 +83,6 @@
 							<input type="text" name="numeros" id="numeros" class="form-control" required  />
 						</div>
 
-
 					</div>
 					<div class="col-md-6">
 
@@ -30,22 +92,19 @@
 					</div>
 				</div>
 			</form>
-
-			<div>
-				{% for  venda in result %}
-					<div class="media">
-						<div class="media-body">
-							<p class="email-summary">
-								<strong>{{ venda.id }}</strong> | <strong>{{ venda.numero }}</strong> | <strong>{{ venda.vendedor.name }}</strong>| <input type="checkbox" name="status" id="status" {{ venda and venda.status ? 'checked="checked"' : "" }}></strong>
-							</p>
-						</div>
-					</div>
-				{% endfor %}
-			</div>
-
-
-
-
 		</div>
+
+	</div>
+
+	<div>
+		{% for  venda in result %}
+			<div class="media">
+				<div class="media-body">
+					<p class="email-summary">
+						<strong>{{ venda.id }}</strong> |<strong>{{ venda.created }}</strong> | <strong>{{ venda.plano.name }}</strong> | <strong>{{ venda.loja.name }}</strong> | <strong>{{ venda.numero }}</strong> | <strong>{{ venda.vendedor.name }}</strong>| <input type="checkbox" name="status[]" id="pago" {{ venda and venda.status ? 'checked="checked"' : "" }}> <input type="hidden" name="id" value="{{ venda ? venda.id : "" }}" /></strong>|<strong>{{ venda.created }}</strong> | <strong>{{ venda.loja.name }}</strong> | <strong>{{ venda.numero }}</strong> | <strong>{{ venda.vendedor.name }}</strong>| <input type="checkbox" name="complemento[]" id="statusc" {{ venda and venda.statusCompl ? 'checked="checked"' : "" }}><input type="hidden" name="id" value="{{ venda ? venda.id : "" }}" /></strong>
+					</p>
+				</div>
+			</div>
+		{% endfor %}
 	</div>
 {% endblock %}

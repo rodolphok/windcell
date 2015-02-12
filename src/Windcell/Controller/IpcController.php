@@ -47,7 +47,7 @@ class IpcController extends BaseController
 
         $ipcService = new IpcService();
         $ipcService->setEm($app['orm.em']);
-        $ipc = $ipcService->save($data);
+        $ipcService->save($data);
 
         return $app->redirect($_SERVER['HTTP_REFERER']);
 

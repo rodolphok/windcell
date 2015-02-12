@@ -45,7 +45,7 @@ class DDDController extends BaseController
 
         $dddService = new DDDService();
         $dddService->setEm($app['orm.em']);
-        $ddd = $dddService->save($data);
+        $dddService->save($data);
 
        return $app->redirect('/ddd');
 
@@ -74,7 +74,7 @@ class DDDController extends BaseController
     {
         $dddService = new DDDService();
         $dddService->setEm($app['orm.em']);
-        $ddd = $dddService->delete($dddId);
+        $dddService->delete($dddId);
 
         return $app->redirect('/ddd');
     }

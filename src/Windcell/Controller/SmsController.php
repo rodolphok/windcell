@@ -19,9 +19,7 @@ class SmsController extends BaseController
     {
         $controller->get('/', array($this, 'getIndex'));
         $controller->post('/create', array($this, 'create'));
-
         $controller->get('/edit/{smsId}', array($this, 'edit'))->value("smsId", null);
-
     }
 
     public function getIndex(Request $request, Application $app)
@@ -47,7 +45,7 @@ class SmsController extends BaseController
 
         $smsService = new SmsService();
         $smsService->setEm($app['orm.em']);
-        $sms = $smsService->save($data);
+        $smsService->save($data);
 
        return $app->redirect('/sms');
 
@@ -67,6 +65,5 @@ class SmsController extends BaseController
             )
         );
     }
-
 
 }

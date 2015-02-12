@@ -45,6 +45,7 @@ class UserController extends BaseController
             'lojas' => $lojas,
 
         );
+
         return $app['twig']->render('user/index.twig', $data);
     }
 
@@ -71,7 +72,8 @@ class UserController extends BaseController
         $data = json_encode($data);
         $userService = new UserService();
         $userService->setEm($app['orm.em']);
-        $user = $userService->save($data);
+        $userService->save($data);
+
         return $app->redirect('/user');
     }
 

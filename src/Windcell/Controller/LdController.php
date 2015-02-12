@@ -46,7 +46,7 @@ class LdController extends BaseController
 
         $ldService = new LdService();
         $ldService->setEm($app['orm.em']);
-        $ld = $ldService->save($data);
+        $ldService->save($data);
 
        return $app->redirect('/ld');
 

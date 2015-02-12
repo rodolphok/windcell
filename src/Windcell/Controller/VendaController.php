@@ -15,12 +15,10 @@ class VendaController extends BaseController
         return array('getIndex','create');
     }
 
-
     public function mount($controller)
     {
         $controller->get('/', array($this, 'getIndex'));
         $controller->post('/create', array($this, 'create'));
-
     }
 
     public function getIndex(Request $request, Application $app)
@@ -31,11 +29,9 @@ class VendaController extends BaseController
 
         $data = array(
 
-
             'ddds' => $ddds,
             'planos' => $planos,
             'ipcs' => $ipcs,
-
         );
 
         return $app['twig']->render('vendedor/venda/index.twig',$data);
@@ -51,11 +47,10 @@ class VendaController extends BaseController
 
         $vendaService = new VendaService();
         $vendaService->setEm($app['orm.em']);
-        $venda = $vendaService->save($data, $app);
+        $vendaService->save($data, $app);
 
         return $app->redirect($_SERVER['HTTP_REFERER']);
 
     }
-
 
 }

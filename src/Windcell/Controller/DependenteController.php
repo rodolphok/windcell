@@ -46,7 +46,7 @@ class DependenteController extends BaseController
 
         $dependenteService = new DependenteService();
         $dependenteService->setEm($app['orm.em']);
-        $dependente = $dependenteService->save($data);
+        $dependenteService->save($data);
 
        return $app->redirect('/dependente');
 

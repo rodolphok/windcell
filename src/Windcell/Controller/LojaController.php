@@ -75,7 +75,7 @@ class LojaController extends BaseController
     {
         $lojaService = new LojaService();
         $lojaService->setEm($app['orm.em']);
-        $loja = $lojaService->delete($lojaId);
+        $lojaService->delete($lojaId);
 
         return $app->redirect('/loja');
     }
